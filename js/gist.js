@@ -67,6 +67,42 @@ $('logeo.html').ready(function(){
 		$('<strong> Bienvenido, </strong> ' + USERNAME + '<br>').appendTo($('#logeo_result'));
 
 });
+//1. GET LISTA TODOS
+/*$("#button_get_repos").click(function(e){
+	e.preventDefault();
+	getTodos();
+});
+
+function getTodos(){
+	var url = API_URL + '/users/' + USERNAME + '/gists';
+	$("#repos_result").text('');
+	
+	$.ajax({
+		url : url,
+		type : 'GET',
+		crossDomain : true,
+		dataType : 'json',
+	}).done(function(data, status, jqxhr){
+				var repos = data;
+				
+				
+				$.each(repos, function(i, v) {
+					var repo = v;
+					$('<br>     </br>').appendTo($('#repos_result'));
+					//$('<h4> Name: ' + repo.name + '</h4>').appendTo($('#repos_result'));
+					$('<p>').appendTo($('#repos_result'));	
+					$('<strong> ID: </strong> ' + repo.id + '<br>').appendTo($('#repos_result'));
+					$('<strong> URL: </strong> ' + repo.html_url + '<br>').appendTo($('#repos_result'));
+					$('<strong> Usuario: </strong> ' + repo.owner.login + '<br>').appendTo($('#repos_result'));
+					//$('<strong> Description: </strong> ' + repo.description + '<br>').appendTo($('#repos_result'));
+					$('</p>').appendTo($('#repos_result'));
+					console.log(data);
+				});
+				
+	}).fail(function(){
+		$('#repos_result').text('No hay Todos');
+	});
+}*/
 
 //1. GET LISTA TODOS
 $("#button_get_gists").click(function(e){
@@ -188,20 +224,24 @@ function getGistid(gists) {
 	});
 }
 
-//4. CREATE TODO
+//4. CREATE 
 $("#button_create_gist").click(function(e){
 	
 	e.preventDefault();
 	$("#gist_result").text('');
 	
 	var nuevoTodo ;
-	
+	/*if (isNaN($('#id').val())){
+        $(
+								'<div class="alert alert-success"> <strong>Error!</strong> Debes poner un numero entero en Tamaño</div>')
+								.appendTo($("#result"));
+    }*/
 	if($('#description_gist').val() == "" || $('#comment_gist').val()=="" || $('#file_gist').val()==""){
 		$('<div class="alert alert-info">Debes rellenar los campos Descripcion, Nombre de Archivo y Comentario</div>').appendTo($("#gist_result"));
 	}
 	else{
 	
-	var file = '"' + $('#file_gist').val() + '"';
+	var file = $('#file_gist').val();
 	console.log (file);
 		nuevoTodo = {
 			"description" : $('#description_gist').val(),
@@ -234,6 +274,7 @@ function createGist(nuevoTodo) {
 	}).done(function(data, status, jqxhr) {
 	console.log(data);
 		$('<div class="alert alert-success"> <strong>Ok!</strong> Gist Created</div>').appendTo($("#gist_result"));	
+		 $("#file_gist").val("");
         $("#description_gist").val("");
 		$("#comment_gist").val("");		
   	}).fail(function() {
@@ -340,4 +381,3 @@ function deleteGist(gists) {
 								.appendTo($("#gists_result_user"));
 					});
 }
-
